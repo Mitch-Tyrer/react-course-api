@@ -8,7 +8,14 @@ export const Consumer = UserContext.Consumer;
 
 class Provider extends Component {
     state = {
-        authenticatedUser: Cookies.getJSON('authenticatedUser') || null
+        authenticatedUser: Cookies.getJSON('authenticatedUser') || null,
+        prevPath: ''
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.location !== this.props.location) {
+            this.setState({prevPath: this.props.location})
+        }
     }
 
     handleSignIn = (e, emailAddress, password) => {
@@ -29,7 +36,7 @@ class Provider extends Component {
                     authenticatedUser: user
                 })
             Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1 });
-            this.props.history.push('/courses')
+            this.state.prevPath ? this.props.history.push(this.state.prevPath) : this.props.history.push('/courses')
             } 
         }).catch(err => {
             if(err.response.status === 400){
