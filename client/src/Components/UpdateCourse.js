@@ -20,7 +20,7 @@ export default class UpdateCourse extends Component {
         }).then(res => {
 
             const course = res.data
-            const user = this.context.user
+            const user = this.context.authenticatedUser
 
             if (course.user._id === user._id) {
                 this.setState({
