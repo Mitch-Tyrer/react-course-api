@@ -24,6 +24,8 @@ export default class CourseDetail extends Component {
             } else if (err.response.status === 500) {
                 this.props.history.push('/error');
                 console.log("Error Parsing and Fetching Data", err)
+            } else if (err.response.status === 404) {
+                this.props.history.push('/notfound');
             }
         })
     }
@@ -42,19 +44,20 @@ export default class CourseDetail extends Component {
             }
         }).then(() => this.props.history.push('/courses'))
         .catch(err => {
-            if(err.status === 401){
+            if(err.response.status === 401){
                 this.props.history.push('/forbidden');
                 console.log("Error Parsing and Fetching Data", err)
-            } else if (err.status === 500) {
+            } else if (err.response.status === 500) {
                 this.props.history.push('/error');
                 console.log("Error Parsing and Fetching Data", err)
+            } else if (err.response.status === 404) {
+                this.props.history.push('/notfound');
             }
         })
     }
 
     render() {
-        const course = this.state.course
-        console.log(course)    
+        const course = this.state.course  
         const courseUser = this.state.user
         return (
             <div>
