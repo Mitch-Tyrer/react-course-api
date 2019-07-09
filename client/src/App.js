@@ -11,8 +11,12 @@ import CreateCourse from './Components/CreateCourse';
 import UserSignIn from './Components/UserSignIn';
 import UserSignUp from './Components/UserSignUp';
 import UpdateCourse from './Components/UpdateCourse';
-
+//Authenticated Routes
 import PrivateRoute from './Components/PrivateRoute';
+//Error Pages
+import NotFound from './Components/NotFound';
+import Forbidden from './Components/Forbidden';
+import Error from './Components/Error';
 
 
 
@@ -29,7 +33,9 @@ const App = () => {
         <Route exact path="/sign-out" render={() => <Redirect to="/courses" />} />
         <PrivateRoute exact path="/create-course" component={CreateCourse} />
         <PrivateRoute exact path="/courses/:id/update" render={(props) => <UpdateCourse {...props} />} />
-        {/* <Route exact path= "/" />    */}
+        <Route exact path="/notfound" component={NotFound} />
+        <Route exact path="/forbidden" component={Forbidden} />
+        <Route exact path="/error" component={Error} />
       </Switch>
     </>
   );
