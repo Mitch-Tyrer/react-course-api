@@ -59,7 +59,8 @@ router.post('/users', [
     check('firstName').exists({ checkNull: true, checkFalsy: true }).withMessage('Please provide a value for first name'),
     check('lastName').exists({ checkNull: true, checkFalsy: true }).withMessage('Please provide a last name.'),
     check('emailAddress').exists({ checkNull: true, checkFalsy: true }).withMessage('Please provide an email address.'),
-    check('password').exists({ checkNull: true, checkFalsy: true }).withMessage('Please provide a password.')
+    check('password').exists({ checkNull: true, checkFalsy: true }).withMessage('Please provide a password.'),
+    check('confirmPassword').exists({ checkNull: true, checkFalsy: true }).custom((value, { req }) => value === req.body.password).withMessage('Passwords do not match')
 ], (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
