@@ -122,11 +122,18 @@ router.post('/courses', authenticateUser, [
     });
 }); //end course post route
 
-router.put('/courses/:id', authenticateUser, (req, res, next) => {
+router.put('/courses/:id', authenticateUser, [
+    check('title').exists({ checkNull: true, checkFalsy: true }).withMessage('Please provide a course title.'),
+    check('description').exists({ checkNull: true, checkFalsy: true }).withMessage('Please provide a description')
+], (req, res, next) => {
     const currentUser = req.currentUser.id;
     const courseUser = req.course.user._id;
+    const errors = validationResult(req);
 
-    if (currentUser == courseUser) {
+    if (!errors.isEmpty()) {
+        const errorMessages = errors.array().map(err => err.msg);
+        return res.status(400).json({ error: errorMessages });
+    } else if (currentUser == courseUser) {
         req.course.updateOne(req.body, function (err, result) {
             if (err) return next(err);
             res.location('/api/courses/' + req.course.id)

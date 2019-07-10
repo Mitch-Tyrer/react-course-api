@@ -10,7 +10,8 @@ export default class UpdateCourse extends Component {
         description: '',
         estimatedTime: '',
         materialsNeeded: '',
-        user: {}
+        user: {},
+        err: {}
     }
     static contextType = UserContext;
     componentDidMount() {
@@ -36,7 +37,7 @@ export default class UpdateCourse extends Component {
             }
 
         }).catch(err => {
-            if(err.response.status === 401){
+            if (err.response.status === 401) {
                 this.props.history.push('/forbidden');
                 console.log("Error Parsing and Fetching Data", err)
             } else if (err.response.status === 500) {
@@ -75,38 +76,46 @@ export default class UpdateCourse extends Component {
                 materialsNeeded: this.state.materialsNeeded,
             }
         }).then(res => {
-            if(res.status === 200) {
+            if (res.status === 204) {
                 this.props.history.push("/courses/" + this.props.match.params.id)
             } else if (res.status === 404) {
                 this.props.history.push("/notfound")
             }
         }).catch(err => {
-            if(err.response.status === 401){
-                this.props.history.push('/forbidden');
-                console.log("Error Parsing and Fetching Data", err)
+            if (err.response.status === 400) {
+                this.setState({
+                    err: err.response.data
+                })
             } else if (err.response.status === 500) {
-                this.props.history.push('/error');
-                console.log("Error Parsing and Fetching Data", err)
-            } else if (err.response.status === 404) {
-                this.props.history.push('/notfound');
+                this.props.history.push('/error')
             }
         })
     }
 
     render() {
         return (
-            <Consumer>
-                {
-                    ({ authenticatedUser }) => (
-                        <div className="bounds course--detail">
-                            <h1>Update Course</h1>
+            <div className="bounds course--detail">
+                <h1>Update Course</h1>
+                {this.state.err.error ?
+                    <div>
+                        <h2 className="validation--errors--label">Validation errors</h2>
+                        <div className="validation-errors">
+                            <ul>
+                                {this.state.err.error.map((err, i) => <li key={i}>{err}</li>)}
+                            </ul>
+                        </div>
+                    </div> : ""
+                }
+                <Consumer>
+                    {
+                        ({ authenticatedUser }) => (
                             <div>
                                 <form onSubmit={e => this.handleUpdate(e, authenticatedUser.emailAddress, authenticatedUser.password)}>
                                     <div className="grid-66">
                                         <div className="course--header">
                                             <h4 className="course--label">Course</h4>
                                             <div><input onChange={this.handleChange} id="title" name="title" type="text" className="input-title course--title--input" placeholder="Course title..." value={this.state.title || ''} /></div>
-                                            <p>By {`${this.state.user.firsName} ${this.state.user.lastName}`} </p>
+                                            <p>By {`${this.state.user.firstName} ${this.state.user.lastName}`} </p>
                                         </div>
                                         <div className="course--description">
                                             <div><textarea onChange={this.handleChange} id="description" name="description" className="" placeholder="Course description..." value={this.state.description || ''}>
@@ -138,10 +147,10 @@ export default class UpdateCourse extends Component {
                                         </button></div>
                                 </form>
                             </div>
-                        </div>
-                    )
-                }
-            </Consumer>
+                        )
+                    }
+                </Consumer>
+            </div>
         );
     }
 }
