@@ -66,6 +66,16 @@ export default class UpdateCourse extends Component {
             }
         }).then(() => {
             this.props.history.push("/courses/" + this.props.match.params.id)
+        }).catch(err => {
+            if(err.response.status === 401){
+                this.props.history.push('/forbidden');
+                console.log("Error Parsing and Fetching Data", err)
+            } else if (err.response.status === 500) {
+                this.props.history.push('/error');
+                console.log("Error Parsing and Fetching Data", err)
+            } else if (err.response.status === 404) {
+                this.props.history.push('/notfound');
+            }
         })
     }
 

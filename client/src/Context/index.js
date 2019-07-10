@@ -36,7 +36,7 @@ class Provider extends Component {
                     authenticatedUser: user
                 })
             Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1 });
-            this.state.prevPath ? this.props.history.push(this.state.prevPath) : this.props.history.push('/courses')
+            this.props.history.push(this.state.prevPath)
             } 
         }).catch(err => {
             if(err.response.status === 400){
