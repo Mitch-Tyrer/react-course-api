@@ -35,7 +35,17 @@ export default class UpdateCourse extends Component {
                 this.props.history.push('/forbidden')
             }
 
-        }).catch(err => console.log("error fetching data", err))
+        }).catch(err => {
+            if(err.response.status === 401){
+                this.props.history.push('/forbidden');
+                console.log("Error Parsing and Fetching Data", err)
+            } else if (err.response.status === 500) {
+                this.props.history.push('/error');
+                console.log("Error Parsing and Fetching Data", err)
+            } else if (err.response.status === 404) {
+                this.props.history.push('/notfound');
+            }
+        })
 
     }
 
@@ -64,8 +74,12 @@ export default class UpdateCourse extends Component {
                 estimatedTime: this.state.estimatedTime,
                 materialsNeeded: this.state.materialsNeeded,
             }
-        }).then(() => {
-            this.props.history.push("/courses/" + this.props.match.params.id)
+        }).then(res => {
+            if(res.status === 200) {
+                this.props.history.push("/courses/" + this.props.match.params.id)
+            } else if (res.status === 404) {
+                this.props.history.push("/notfound")
+            }
         }).catch(err => {
             if(err.response.status === 401){
                 this.props.history.push('/forbidden');

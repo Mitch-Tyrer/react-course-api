@@ -36,7 +36,6 @@ const authenticateUser = async (req, res, next) => {
 
 router.param("id", function (req, res, next, id) {
     Course.findById(id).populate('user', 'firstName lastName').exec(function (err, doc) {
-        if (err) return next(err);
         if (!doc) {
             err = new Error("Not Found");
             err.status = 404;

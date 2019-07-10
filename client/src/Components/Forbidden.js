@@ -15,7 +15,8 @@ const Forbidden = React.memo(() => {
         <div className="grid-100 pad-bottom">
           <button className="button button-secondary">
             <Link to="/">Go Back</Link>
-          </button></div>
+          </button>
+        </div>
       </div>
 
     </div>
