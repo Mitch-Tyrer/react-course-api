@@ -1,8 +1,8 @@
 import React from 'react';
 import '../styles/404.css';
-import { Link } from 'react-router-dom';
 
-const NotFound = () => (
+
+const NotFound = (props) => (
   <div id="notfound">
     <div className="notfound">
       <div className="notfound-404">
@@ -11,7 +11,7 @@ const NotFound = () => (
       <h2>we are sorry, but the page you requested was not found</h2>
       <div className="grid-100 pad-bottom">
         <button className="button button-secondary">
-          <Link to="/">Go Back</Link>
+        <div onClick={() => props.history.go(-2)}>Go Back</div>
         </button></div>
     </div>
   </div>

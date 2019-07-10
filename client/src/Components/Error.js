@@ -1,8 +1,8 @@
 import React from 'react';
 import '../styles/404.css';
-import { Link } from 'react-router-dom';
 
-const Error = () => (
+
+const Error = (props) => (
   <div id="notfound">
     <div className="notfound">
       <div className="notfound-404">
@@ -11,7 +11,7 @@ const Error = () => (
       <h2>Sorry! We just encountered an unexpected error!</h2>
       <div className="grid-100 pad-bottom">
         <button className="button button-secondary">
-          <Link to="/">Go Back</Link>
+        <div onClick={() => props.history.goBack()}>Go Back</div>
         </button></div>
     </div>
 
