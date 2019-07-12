@@ -6,7 +6,10 @@ export default class Courses extends Component {
     state = {
         courses: []
     }
-
+    /**
+     * @description: when compenent mounts, calls a get request
+     * to the database, then sets the current state to the responses data.
+     */
     componentDidMount () {
         axios({
             method: 'GET',
@@ -29,6 +32,10 @@ export default class Courses extends Component {
         return (
             <div className="bounds">
                 {
+                    /**
+                        takes the array of course objects set in state in the response from the database
+                        and creates a new array of jsx objects that can be rendered to the DOM.
+                     */
                     this.state.courses.map(course =>
                         <div className="grid-33" key={course._id} >
                             <Link className="course--module course--link" to={`/courses/${course._id}`}>

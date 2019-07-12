@@ -9,7 +9,12 @@ export default class CourseDetail extends Component {
         course: [],
         user: []
     }
-
+/**
+ * @description: get request to database to render the page of the course
+ * based on the paramters of the id in the url
+ * @params {string}
+ * string is the unique course id created by mongoDB
+ */
     componentDidMount () {
         axios({
             method: 'GET',
@@ -27,7 +32,12 @@ export default class CourseDetail extends Component {
             } 
         })
     }
-
+    /**
+     * @description: handles the deletion of a course from the DB
+     * @params { event, string, string }
+     * the function takes an event and the credentials of the logged in user
+     * as strings from the global state in order to pass basic auth.
+     */
     handleDelete = (e, emailAddress, password) => {
         if (e) {
             e.preventDefault();

@@ -7,13 +7,20 @@ export default class UserSignIn extends Component {
         emailAddress: '',
         password: ''
     }
+    /** 
+     * @description: checks if a user is logged in. If they are
+     * they are redirected to the main route.
+     */
     static contextType = UserContext;
     componentDidMount () {
         if(this.context.authenticatedUser !== null) {
             this.props.history.push('/');
         }
     }
-
+        /**
+     * @description updates the state based on the input fields as they change
+     * @type {string}
+     */
     handleChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value

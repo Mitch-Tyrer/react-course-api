@@ -14,20 +14,32 @@ export default class UserSignUp extends Component {
         emailError: '',
 
     }
-
+    /**
+     * @description updates the state based on the input fields as they change
+     * @type {string}
+     */
     handleChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         });
     }
-
+    /**
+     * @description: checks if a user is logged in.
+     * if they are, it redirects to the main page.
+     */
     static contextType = UserContext;
     componentDidMount () {
         if(this.context.authenticatedUser !== null) {
             this.props.history.push('/');
         }
     }
-
+/**
+ * @params { event, function }
+ * takes the submit event from the form and the signIn method from
+ * the context API.
+ * Posts the updated state to the server and then automatically logs in
+ * the new user
+ */
     handleSignUp = (e, signIn) => {
         if (e) {
             e.preventDefault();

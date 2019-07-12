@@ -12,13 +12,21 @@ export default class CreateCourse extends Component {
         materialsNeeded: '',
         err: {},
     }
-
+    /**
+     * @description updates the state based on the input fields as they change
+     * @type {string}
+     */
     handleChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         });
     }
-
+    /**
+     * @description handles the form submit
+     * @params {event, string, string, string}
+     * takes the default event, and the users credentials from the global
+     * to post data to the database based on the state of the component.
+     */
     handleSubmit = (e, emailAddress, password, id) => {
         if (e) {
             e.preventDefault();

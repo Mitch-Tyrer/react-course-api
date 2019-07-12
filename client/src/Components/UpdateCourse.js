@@ -13,6 +13,11 @@ export default class UpdateCourse extends Component {
         user: {},
         err: {}
     }
+    /**
+     * @description: compares the res data with the current user info as part
+     * of the get request.  If they do not match user is unauthorized and redirected
+     * to a forbidden path
+     */
     static contextType = UserContext;
     componentDidMount() {
         axios({
@@ -49,13 +54,21 @@ export default class UpdateCourse extends Component {
         })
 
     }
-
+        /**
+     * @description updates the state based on the input fields as they change
+     * @type {string}
+     */
     handleChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         });
     }
-
+    /**
+     * @params { event, string, string }
+     * takes the form submit event, and user credentials as strings.
+     * makes a put request using the current state of the compoenent
+     * using the user credentials for basic auth.
+     */
     handleUpdate = (e, emailAddress, password) => {
         if (e) {
             e.preventDefault();

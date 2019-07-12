@@ -1,6 +1,6 @@
 import React from 'react';
 import './styles/global.css';
-
+//React Router
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 
 //Components
@@ -41,4 +41,5 @@ const App = () => {
   );
 }
 
+//exported withRouter to have access to browser history;
 export default withRouter(App); 
