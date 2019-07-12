@@ -50,9 +50,7 @@ export default class UserSignIn extends Component {
                                         </div>
                                         <div className="grid-100 pad-bottom">
                                             <button className="button" type="submit">Sign In</button>
-                                            <button className="button button-secondary">
-                                                <Link to="/">Cancel</Link>
-                                            </button>
+                                            <Link to="/" className="button button-secondary">Cancel</Link>
                                         </div>
                                     </form>
                                 </div>
