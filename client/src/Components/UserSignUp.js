@@ -49,11 +49,13 @@ export default class UserSignUp extends Component {
                 this.setState({
                     err: err.response.data
                 })
-            } else if (err.response.status === 500) {
+            } else if (err.response.status === 409) {
                 this.setState({
                     emailError: 'Email is already in use.'
                 })
 
+            } else if (err.response.status === 500) {
+                this.props.history.push('/error');
             }
         })
     }
@@ -71,19 +73,19 @@ export default class UserSignUp extends Component {
                                 {this.state.err.error.map((err, i) => <li key={i}>{err}</li>)}
                             </ul>
                         </div>
-                    </div> : 
+                    </div> :
                     this.state.emailError !== '' ?
-                    <div>
-                    <h2 className="validation--errors--label">Validation errors</h2>
-                        <div className="validation-errors">
-                            <ul>
-                                {this.state.emailError}
-                            </ul>
-                        </div>
-                    </div> : ""
-                
+                        <div>
+                            <h2 className="validation--errors--label">Validation errors</h2>
+                            <div className="validation-errors">
+                                <ul>
+                                    {this.state.emailError}
+                                </ul>
+                            </div>
+                        </div> : ""
+
                 }
-                
+
                 <Consumer>
                     {({ signIn }) => (
                         <div className="bounds">

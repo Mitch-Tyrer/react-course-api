@@ -26,10 +26,10 @@ const App = () => {
       <Header />
       <Switch>
         <Route exact path="/" render={() => <Redirect to="/courses" />} />
-        <Route exact path="/courses" render={() => <Courses />} />
+        <Route exact path="/courses" render={(props) => <Courses {...props} />} />
         <Route exact path="/courses/:id" render={(props) => <CourseDetail {...props} />} />
         <Route exact path="/sign-in" render={(props) => <UserSignIn {...props} />} />
-        <Route exact path="/sign-up" render={() => <UserSignUp />} />
+        <Route exact path="/sign-up" render={(props) => <UserSignUp {...props} />} />
         <Route exact path="/sign-out" render={() => <Redirect to="/courses" />} />
         <PrivateRoute exact path="/create-course" component={CreateCourse} />
         <PrivateRoute exact path="/courses/:id/update" render={(props) => <UpdateCourse {...props} />} />

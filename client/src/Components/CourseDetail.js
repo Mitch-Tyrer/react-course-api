@@ -18,15 +18,13 @@ export default class CourseDetail extends Component {
             this.setState({ course: res.data, user: res.data.user });
         })
         .catch(err => {
-            if(err.response.status === 400){
+            if(err.response.status === 404){
                 this.props.history.push('/notfound');
                 console.log("Error Parsing and Fetching Data", err)
             } else if (err.response.status === 500) {
                 this.props.history.push('/error');
                 console.log("Error Parsing and Fetching Data", err)
-            } else if (err.response.status === 404) {
-                this.props.history.push('/notfound');
-            }
+            } 
         })
     }
 

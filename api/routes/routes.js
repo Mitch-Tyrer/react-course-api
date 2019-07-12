@@ -69,8 +69,8 @@ router.post('/users', [
     }
     let user = new User(req.body);
     user.password = bcryptjs.hashSync(user.password);
-    user.save(function (err, user) {
-        if (err) return next(err);
+    user.save(function (err) {
+        if (err) return res.status(409).json({'error':'User already exists.'});
         res.location('/');
         res.sendStatus(201);
     });
@@ -80,7 +80,7 @@ router.get('/courses', (req, res, next) => {
     Course.find({}).populate('user', 'firstName lastName')
         .exec(function (err, course) {
             if (err) return next(err);
-            res.status(200);
+            res.status(201);
             res.json(course);
         });
 
