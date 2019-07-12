@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
-import { Consumer } from '../Context'
+import { Consumer, UserContext } from '../Context'
 import axios from 'axios';
 
 export default class UserSignUp extends Component {
@@ -19,6 +19,13 @@ export default class UserSignUp extends Component {
         this.setState({
             [e.target.name]: e.target.value
         });
+    }
+
+    static contextType = UserContext;
+    componentDidMount () {
+        if(this.context.authenticatedUser !== null) {
+            this.props.history.push('/');
+        }
     }
 
     handleSignUp = (e, signIn) => {
