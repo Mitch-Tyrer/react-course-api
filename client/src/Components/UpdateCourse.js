@@ -27,19 +27,23 @@ export default class UpdateCourse extends Component {
 
             const course = res.data
             const user = this.context.authenticatedUser
-
-            if (course.user._id === user._id) {
-                this.setState({
-                    courseID: res.data._id,
-                    title: res.data.title,
-                    description: res.data.description,
-                    estimatedTime: res.data.estimatedTime,
-                    materialsNeeded: res.data.materialsNeeded,
-                    user: res.data.user
-                })
+            if(user) {
+                if (course.user._id === user._id) {
+                    this.setState({
+                        courseID: res.data._id,
+                        title: res.data.title,
+                        description: res.data.description,
+                        estimatedTime: res.data.estimatedTime,
+                        materialsNeeded: res.data.materialsNeeded,
+                        user: res.data.user
+                    })
+                } else {
+                    this.props.history.push('/forbidden')
+                }
             } else {
-                this.props.history.push('/forbidden')
+                this.props.history.push('/sign-in');
             }
+           
 
         }).catch(err => {
             if (err.response.status === 401) {
